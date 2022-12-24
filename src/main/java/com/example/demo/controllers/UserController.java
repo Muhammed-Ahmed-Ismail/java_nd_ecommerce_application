@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,9 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
-        return ResponseEntity.of(userRepository.findById(id));
+
+        return ResponseEntity.ok(userService.findUserById(id));
+
     }
 
     @GetMapping("/{username}")
@@ -42,7 +45,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        if (createUserRequest.getPassword().equals(createUserRequest.getPassword()) && createUserRequest.getPassword().length() < 8) {
+        if (createUserRequest.getConfirmPassword().equals(createUserRequest.getPassword()) && createUserRequest.getPassword().length() >= 8) {
             User user = userService.createUser(createUserRequest);
             return ResponseEntity.ok(user);
         } else {

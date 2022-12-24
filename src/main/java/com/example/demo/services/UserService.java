@@ -6,9 +6,12 @@ import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,5 +32,9 @@ public class UserService {
         userRepository.save(user);
 
         return user;
+    }
+    public User findUserById(Long id)  {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElseThrow(UserNotFound::new);
     }
 }
