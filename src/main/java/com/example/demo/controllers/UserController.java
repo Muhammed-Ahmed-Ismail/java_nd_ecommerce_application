@@ -3,6 +3,13 @@ package com.example.demo.controllers;
 import java.util.Optional;
 
 import com.example.demo.services.UserService;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+//import org.slf4j.*;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -23,12 +30,13 @@ import com.example.demo.model.requests.CreateUserRequest;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-
+    private static final Logger log = LogManager.getLogger(UserController.class);
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     UserService userService;
+
 
     @GetMapping("/id/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
@@ -47,6 +55,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
         if (createUserRequest.getConfirmPassword().equals(createUserRequest.getPassword()) && createUserRequest.getPassword().length() >= 8) {
             User user = userService.createUser(createUserRequest);
+            log.info("user created");
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.badRequest().build();

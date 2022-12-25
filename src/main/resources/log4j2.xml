@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+            >
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <SplunkHttp
+                name="splunkhttp"
+                url="https://18.210.14.164:8088"
+                token="b00e361f-96b3-43d6-a02f-53da2744f5df"
+                index="application_logs"
+                disableCertificateValidation="true">
+            <PatternLayout pattern="%m"/>
+        </SplunkHttp>
+
+    </Appenders>
+
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="splunkhttp"/>
+        </Root>
+<!--        <Root level="INFO"/>-->
+<!--        <Logger name="%user_logger_name%" level="info">-->
+<!--            <AppenderRef ref="http"/>-->
+<!--        </Logger>-->
+    </Loggers>
+</Configuration>
