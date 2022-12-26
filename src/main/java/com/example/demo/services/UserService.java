@@ -21,8 +21,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public User createUser(CreateUserRequest userRequest)
-    {
+
+    public User createUser(CreateUserRequest userRequest) {
         User user = new User();
         user.setUsername(userRequest.getUsername());
         Cart cart = new Cart();
@@ -33,8 +33,9 @@ public class UserService {
 
         return user;
     }
-    public User findUserById(Long id)  {
+
+    public User findUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElseThrow(UserNotFound::new);
+        return optionalUser.orElseThrow(() -> new NotFound("User with ID " + id + "UserNotFound"));
     }
 }

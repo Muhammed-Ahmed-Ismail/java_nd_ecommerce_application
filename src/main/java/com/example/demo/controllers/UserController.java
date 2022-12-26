@@ -55,9 +55,10 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
         if (createUserRequest.getConfirmPassword().equals(createUserRequest.getPassword()) && createUserRequest.getPassword().length() >= 8) {
             User user = userService.createUser(createUserRequest);
-            log.info("user created");
+            log.info("user "+user.getUsername()+" create SUCCESS");
             return ResponseEntity.ok(user);
         } else {
+            log.error("user create FAILED");
             return ResponseEntity.badRequest().build();
         }
     }
