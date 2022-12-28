@@ -9,8 +9,8 @@
         </Console>
         <SplunkHttp
                 name="splunkhttp"
-                url="https://100.26.122.177:8088"
-                token="b00e361f-96b3-43d6-a02f-53da2744f5df"
+                url="url"
+                token="token"
                 index="application_logs"
                 disableCertificateValidation="true">
             <PatternLayout pattern="%m"/>
